@@ -1,29 +1,6 @@
 # dw_4vGYMAPP
-<em>4vGYM API REST </em>
-##Índice
+<em>weight_lifting: :muscle: 4vGYM API REST </em>
 
-*[4vGYM API REST ](#Título-e-imagen-de-portada)
-
-
-*[Índice](#índice)
-
-*[Descripción del proyecto](#descripción-del-proyecto)
-
-*[Estado del proyecto](#Estado-del-proyecto)
-
-*[Características de la aplicación y demostración](#Características-de-la-aplicación-y-demostración)
-
-*[Acceso al proyecto](#acceso-proyecto)
-
-*[Tecnologías utilizadas](#tecnologías-utilizadas)
-
-*[Personas Contribuyentes](#personas-contribuyentes)
-
-*[Personas-Desarrolladores del Proyecto](#personas-desarrolladores)
-
-* [Licencia](#licencia)
-
-*[Conclusión](#conclusión)
 
 Esta API REST está diseñada para gestionar las actividades, monitores y tipos de actividad de 4vGYM, proporcionando operaciones CRUD (Crear, Leer, Actualizar, Eliminar) y asegurando la integridad de los datos.
 
