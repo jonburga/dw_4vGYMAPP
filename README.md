@@ -1,5 +1,5 @@
 # dw_4vGYMAPP
-<em>:weight_lifting: :muscle: 4vGYM API REST :dumbbell:  :muscle:</em>
+<em>:weight_lifting: :muscle: 4vGYM API REST :barbell:  :muscle:</em>
 
 
 Esta API REST está diseñada para gestionar las actividades, monitores y tipos de actividad de 4vGYM, proporcionando operaciones CRUD (Crear, Leer, Actualizar, Eliminar) y asegurando la integridad de los datos.
