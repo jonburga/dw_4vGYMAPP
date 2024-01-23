@@ -6,39 +6,102 @@ Esta API REST está diseñada para gestionar las actividades, monitores y tipos 
 
 
 /activity-types
+
+
 GET
+
+
 Code 404 error->No hay actividades
 Code 500 error->No hay conexion
 
 /monitors
+
+
 GET 
+
+
+
 CODE 404 error->NO hay monitores
 CODE 500 error-No hay conexion
 POST
+
+
+
 CODE 400- ERROR->Estan mal los datos
 CODE 500 error-No hay conexion
 
 PUT
+
+
 /monitors/{id}
+
+
+
 CODE 404 -Error->No encontrado el monitor
+
+
 CODE 400- ERROR->Estan mal los datos
+
+
 CODE 200 -ZMonitro cambiado
+
+
+
 DELETE
+
+
+
 /monitors/{id}
+
+
+
+
 CODE 404 -Error->No encontrado el monitor
+
+
+
 CODE 200 -ZMonitro cambiado
+
+
+
 CODE 500 error-No hay conexion
 
+
+
 /activities
+
+
+
 GET
+
+
+
 Exception FECHA PASADA no valida
+
+
 CODE 400 No hay conexion o diferente
+
+
 CODE 404 No hay ACTIVIDADES DE ESA FECHA
+
+
 CODE 500 error-No hay conexion
+
+
+
 POST
+
+
+
 CODE 404 no se ha encontrado es tipo de actividad
+
+
 No se ha encontrado ese monitor
+
+
 CODE 406 no hay suficnetes monitores para esa tipo de actividad
+
+
 
 /activities/{id}
 PUT
