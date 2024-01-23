@@ -4,24 +4,135 @@
 
 Esta API REST está diseñada para gestionar las actividades, monitores y tipos de actividad de 4vGYM, proporcionando operaciones CRUD (Crear, Leer, Actualizar, Eliminar) y asegurando la integridad de los datos.
 
-Recursos Disponibles
+
 /activity-types
-GET: Devuelve la lista de tipos de actividad. Cada tipo de actividad tiene un ID, nombre y el número de monitores necesarios para realizarla.
+
+
+GET
+
+
+Code 404 error->No hay actividades
+Code 500 error->No hay conexion
+
 /monitors
-GET: Devuelve la lista de monitores con información detallada, incluyendo ID, Nombre, Email, Teléfono y Foto.
-POST: Permite crear nuevos monitores y devuelve la información del nuevo monitor.
-PUT: Permite editar monitores existentes.
-DELETE: Permite eliminar monitores.
+
+
+GET 
+
+
+
+CODE 404 error->NO hay monitores
+CODE 500 error-No hay conexion
+POST
+
+
+
+CODE 400- ERROR->Estan mal los datos
+CODE 500 error-No hay conexion
+
+PUT
+
+
+/monitors/{id}
+
+
+
+CODE 404 -Error->No encontrado el monitor
+
+
+CODE 400- ERROR->Estan mal los datos
+
+
+CODE 200 -ZMonitro cambiado
+
+
+
+DELETE
+
+
+
+/monitors/{id}
+
+
+
+
+CODE 404 -Error->No encontrado el monitor
+
+
+
+CODE 200 -ZMonitro cambiado
+
+
+
+CODE 500 error-No hay conexion
+
+
+
 /activities
-GET: Devuelve la lista de actividades con detalles sobre los tipos de actividad, monitores incluidos y la fecha. Permite la búsqueda por fecha en formato dd-MM-yyyy.
-POST: Permite crear nuevas actividades y devuelve la información de la nueva actividad. Se valida que la actividad tenga los monitores exigidos por el tipo de actividad. La fecha y la duración deben ajustarse a clases de 90 minutos que comienzan a las 09:00, 13:30 y 17:30.
-PUT: Permite editar actividades existentes.
-DELETE: Permite eliminar actividades.
-Estructura de la Base de Datos
-Se espera que la base de datos que soporte esta API contenga las siguientes tablas:
+
+
+
+GET
+
+
+
+Exception FECHA PASADA no valida
+
+
+CODE 400 No hay conexion o diferente
+
+
+CODE 404 No hay ACTIVIDADES DE ESA FECHA
+
+
+CODE 500 error-No hay conexion
+
+
+
+POST
+
+
+
+CODE 404 no se ha encontrado es tipo de actividad
+
+
+No se ha encontrado ese monitor
+
+
+CODE 406 no hay suficnetes monitores para esa tipo de actividad
+
+
+
+/activities/{id}
+PUT
+
+
+CODE 404 Actividad no encotrda
+
+
+ActivitType no enconotrada
+
+
+CODE 400 Los dato sno son correctos
+
+
+CODE 500 error-No hay conexion
+
+DELETE
+
+
+
+CODE 404 Actividad no encotrda
+
+
+CODE 200 aCTIVIDAD ELIMINADA
+
+
+CODE 500 error-No hay conexion
+
+
 
 Monitores:
-
 ID (clave primaria)
 Nombre
 Email
