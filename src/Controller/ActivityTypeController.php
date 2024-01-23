@@ -26,12 +26,12 @@ class ActivityTypeController extends AbstractController
             }
             if (empty($data)) {
                 // No hay ActivityTypes
-                return new JsonResponse(['status' => 'No hay ActivityTypes disponibles'], JsonResponse::HTTP_NOT_FOUND);
+                return new JsonResponse(['error' => 'No hay ActivityTypes disponibles'], JsonResponse::HTTP_NOT_FOUND);
             }
             return $this->json($data);
         } catch (\Exception $e) {
             // Manejar la excepción
-            return new JsonResponse(['status' => 'Error: ' . $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['error' => 'Error: ' . $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

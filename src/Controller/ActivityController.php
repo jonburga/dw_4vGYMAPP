@@ -25,11 +25,11 @@ class ActivityController extends AbstractController
         try {
             $date = DateTime::createFromFormat('d-m-Y', $dateParam);
             if (!$date) {
-                throw new \Exception('Invalid date format. Please use dd-MM-yyyy.');
+                throw new \Exception('usa un formatod valido como por ejemplo dd-MM-yyyy.');
             }
             $formattedDate = $date->format('Y-m-d');
         } catch (\Exception $e) {
-            return $this->json(['error' => $e->getMessage()], 400);
+            return $this->json(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
 
         $data = [];
@@ -46,11 +46,11 @@ class ActivityController extends AbstractController
                 ->getQuery()
                 ->getResult();
         } catch (\Exception $e) {
-            return $this->json(['error' => $e->getMessage()], 500);
+            return $this->json(['error' => $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         if (!$activities) {
-            return $this->json(['error' => 'No activities for the specified date'], 404);
+            return $this->json(['error' => 'nO HAY ACTIVIDADE DE ESA FECHA'], JsonResponse::HTTP_NOT_FOUND);
         }
 
         foreach ($activities as $activity) {
@@ -86,15 +86,15 @@ class ActivityController extends AbstractController
     
         $activityType = $activityTypeRepository->find($data['id']);
         if (!$activityType) {
-            return $this->json([ 'eror' => 'No se ha encontradoe activitadType'], 400);
+            return $this->json([ 'eror' => 'No se ha encontradoe TIPO DE ACTIVAD'], JsonResponse::HTTP_NOT_FOUND);
         }
-        if (count($data['monitors_id']) < $activityType->getNumbermonitors()) {
-            return $this->json(['eror'=> 'No hay suficientes monitores para este tipo de actividad'], 400);
+        if (count($data['id']) < $activityType->getNumbermonitors()) {
+            return $this->json(['eror'=> 'No hay suficientes monitores para este tipo de actividad'], JsonResponse::HTTP_NOT_ACCEPTABLE);
         }
     
         $monitors = $monitorRepository->findBy(['id' => $data['id']]);
         if (count($monitors) !== count($data['id'])) {
-            return $this->json(['errord' => 'Monitor sno encontrado'], 400);
+            return $this->json(['error' => 'Monitor sno encontrado'], JsonResponse::HTTP_NOT_FOUND);
         }
     
         $dateStart = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $data['date_start']);
@@ -159,19 +159,19 @@ public function updateActivity($id, Request $request, EntityManagerInterface $en
         $activity = $entityManager->getRepository(Activity::class)->find($id);
 
         if (!$activity) {
-            return new JsonResponse(['code' => 'Actividad no encontrada'], JsonResponse::HTTP_NOT_FOUND);
+            return new JsonResponse(['ERROR' => 'Actividad no encontrada'], JsonResponse::HTTP_NOT_FOUND);
         }
 
         $data = json_decode($request->getContent(), true);
 
         // Verificar si los datos necesarios están presentes en el array
         if (!isset($data['type']) || !isset($data['date_start']) || !isset($data['date_end'])) {
-            return new JsonResponse(['code' => 'Faltan datos'], JsonResponse::HTTP_BAD_REQUEST);
+            return new JsonResponse(['erro' => 'Faltan datos'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
         $activityType = $entityManager->getRepository(ActivityType::class)->findOneBy(['name' => $data['type']]);
         if (!$activityType) {
-            return new JsonResponse(['code' => 'No se ha encontrado el activty Type'], JsonResponse::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => 'No se ha encontrado el activty Type'], JsonResponse::HTTP_NOT_FOUND);
         }
 
         $activity->setActivityType($activityType);
@@ -222,15 +222,15 @@ public function updateActivity($id, Request $request, EntityManagerInterface $en
             $activity = $entityManager->getRepository(Activity::class)->find($id);
 
             if (!$activity) {
-                return new JsonResponse(['status' => 'No se ha encontrado esta actividad'], JsonResponse::HTTP_NOT_FOUND);
+                return new JsonResponse(['error' => 'No se ha encontrado esta actividad'], JsonResponse::HTTP_NOT_FOUND);
             }
 
             $entityManager->remove($activity);
             $entityManager->flush();
 
-            return new JsonResponse(['status' => 'Actividad eliminada'], JsonResponse::HTTP_OK);
+            return new JsonResponse(['error' => 'Actividad eliminada'], JsonResponse::HTTP_OK);
         } catch (\Exception $e) {
-            return new JsonResponse(['status' => 'Error: ' . $e->getMessage() . ' Code: ' . $e->getCode()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['error' =>  $e->getMessage() ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

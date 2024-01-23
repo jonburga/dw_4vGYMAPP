@@ -29,13 +29,13 @@ class MonitorController extends AbstractController
 
             if (empty($data)) {
                 // No hay Monitores
-                return new JsonResponse(['status' => 'No hay Monitores disponibles'], JsonResponse::HTTP_NOT_FOUND);
+                return new JsonResponse(['error' => 'No hay Monitores disponibles'], JsonResponse::HTTP_NOT_FOUND);
             }
 
             return $this->json($data);
         } catch (\Exception $e) {
             // Manejar la excepción
-            return new JsonResponse(['status' => 'Error: ' . $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['error' =>  $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     #[Route('/monitors',name:'create_monitor', methods: ['POST'])]
@@ -46,7 +46,7 @@ class MonitorController extends AbstractController
 
             // Verificar si los datos necesarios están presentes en el array
             if (!isset($data['name']) || !isset($data['email']) || !isset($data['phone']) || !isset($data['photo'])) {
-                return new JsonResponse(['status' => 'Error: Faltan datos '], JsonResponse::HTTP_BAD_REQUEST);
+                return new JsonResponse(['error' => ' Faltan datos '], JsonResponse::HTTP_BAD_REQUEST);
             }
 
             // Crear una nueva instancia de Monitor
@@ -59,7 +59,7 @@ class MonitorController extends AbstractController
             $entityManager->flush();
 
             return $this->json([
-                'status' => 'Se ha creado existosamente este monitor',
+                'error' => 'Se ha creado existosamente este monitor',
                 'monitor' => [
                     'name' => $monitor->getName(),
                     'email' => $monitor->getEmail(),
@@ -69,7 +69,7 @@ class MonitorController extends AbstractController
             ]);
         } catch (\Exception $e) {
             // Manejar la excepción
-            return new JsonResponse(['status' => 'Error: ' . $e->getMessage() . ' Code: ' . $e->getCode()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['error' =>  $e->getMessage() . ' Code: ' . $e->getCode()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     #[Route('/monitors/{id}',name:'changeActivity', methods: ['PUT'])]
@@ -79,14 +79,14 @@ class MonitorController extends AbstractController
             $monitor = $entityManager->getRepository(Monitor::class)->find($id);
 
             if (!$monitor) {
-                return new JsonResponse(['status' => 'Monitor no encontrado'], JsonResponse::HTTP_NOT_FOUND);
+                return new JsonResponse(['error' => 'Monitor no encontrado'], JsonResponse::HTTP_NOT_FOUND);
             }
 
             $data = json_decode($request->getContent(), true);
 
             // Verificar si los datos necesarios están presentes en el array
             if (!isset($data['name']) || !isset($data['email']) || !isset($data['phone']) || !isset($data['photo'])) {
-                return new JsonResponse(['status' => 'Error: Missing required data'], JsonResponse::HTTP_BAD_REQUEST);
+                return new JsonResponse(['error' => 'Missing required data'], JsonResponse::HTTP_BAD_REQUEST);
             }
 
             // Actualizar los datos del Monitor
@@ -97,10 +97,10 @@ class MonitorController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->json(['status' => 'Monitor cambiado con exito'], JsonResponse::HTTP_OK);
+            return $this->json(['error' => 'Monitor cambiado con exito'], JsonResponse::HTTP_OK);
         } catch (\Exception $e) {
             // Manejar la excepción
-            return new JsonResponse(['status' => 'Error: ' . $e->getMessage() . ' Code: ' . $e->getCode()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['error' =>  $e->getMessage() . ' Code: ' . $e->getCode()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     #[Route('/monitors/{id}',name:'deleteActivity', methods: ['DELETE'])]
@@ -110,14 +110,14 @@ class MonitorController extends AbstractController
             $monitor = $entityManager->getRepository(Monitor::class)->find($id);
 
             if (!$monitor) {
-                return new JsonResponse(['status' => 'Monitor no se aha encontrado'], JsonResponse::HTTP_NOT_FOUND);
+                return new JsonResponse(['error' => 'Monitor no se aha encontrado'], JsonResponse::HTTP_NOT_FOUND);
             }
             $entityManager->remove($monitor);
             $entityManager->flush();
-            return new JsonResponse(['status' => ' Monitor eliminidao'], JsonResponse::HTTP_OK);
+            return new JsonResponse(['error' => ' Monitor eliminidao'], JsonResponse::HTTP_OK);
         } catch (\Exception $e) {
             // Manejar la excepción
-            return new JsonResponse(['status' => 'Error: ' . $e->getMessage() . ' Code: ' . $e->getCode()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['error' => 'Error: ' . $e->getMessage() . ' Code: ' . $e->getCode()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
