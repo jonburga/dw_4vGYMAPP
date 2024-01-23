@@ -105,15 +105,33 @@ CODE 406 no hay suficnetes monitores para esa tipo de actividad
 
 /activities/{id}
 PUT
+
+
 CODE 404 Actividad no encotrda
+
+
 ActivitType no enconotrada
+
+
 CODE 400 Los dato sno son correctos
+
+
 CODE 500 error-No hay conexion
 
 DELETE
+
+
+
 CODE 404 Actividad no encotrda
+
+
 CODE 200 aCTIVIDAD ELIMINADA
+
+
 CODE 500 error-No hay conexion
+
+
+
 Monitores:
 ID (clave primaria)
 Nombre
